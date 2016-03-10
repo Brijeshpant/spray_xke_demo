@@ -5,10 +5,6 @@ import spray.routing.authentication.{BasicAuth, UserPass}
 import spray.routing.directives.AuthMagnet
 import scala.concurrent.{ExecutionContext, Future}
 
-/**
-  * Created by bpant on 2/27/16.
-  */
-
 trait RequestAuthentication {
   def basicUserAuthenticator(implicit ec: ExecutionContext): AuthMagnet[AuthInfo] = {
     def validateUser(userPass: Option[UserPass]): Option[AuthInfo] = {

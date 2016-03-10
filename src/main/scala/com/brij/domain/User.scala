@@ -10,8 +10,6 @@ case class User(id:String,userName: String, password: String,age:Int=0){
 }
 
 class AuthInfo(val user: User) {
-  def hasPermission(permission: String) = {
-    // Code to verify whether user has the given permission      }
-  }
+
 }
 

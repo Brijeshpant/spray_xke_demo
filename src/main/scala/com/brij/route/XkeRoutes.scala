@@ -2,6 +2,7 @@ package com.brij
 package route
 
 import domain.xke.XKE
+import spray.http.StatusCodes
 import spray.routing.Directives
 import util.DomainApiFormatter
 import spray.json.DefaultJsonProtocol._
@@ -18,13 +19,15 @@ trait XkeRoutes extends Directives with DomainApiFormatter {
     pathPrefix("xke") {
       import ApiFormatProtocol._
       post {
-          entity(as[XKE]) {
+        //curl -XPOST -i 'http://localhost:8080/api/xke' -d '{"topic":"Spray","presenter":"Brij","xkeType":"Tech"}' -H Content-type:"application/json"
+        entity(as[XKE]) {
             xke=>
             XKEService.createXke(xke)
-          complete("xke created $XKE(xke,\"AA\",\"ss\")")
+          complete(StatusCodes.Created ,s"xke created $xke")
           }
         }~get {
           path("all") {
+            //curl localhost:8080/api/xke/all
             complete(XKEService.getAllXkes())
           }
         }

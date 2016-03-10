@@ -11,20 +11,26 @@ import spray.routing._
 trait MyTestRoutes extends Directives {
 
   val testRoutes: Route = {
-    path("app") {
-      post{
-        path("user"){
-      complete {
-          "it is Cool isn't it"
+    pathPrefix("app") {
+      post {
+        path("user") {
+          //curl -X POST localhost:8080/app/user
+          complete("it is Cool isn't it")
         }
+      }~ path(IntNumber / Segment) { (intVal, stringVal) =>
+        //curl http://localhost:8080/app/1/someString
+        complete {
+          s"received parameters are $intVal $stringVal"
         }
       }
-    }~path("api") {
-      post{
-        path("user1"){
-          complete {
-            "it is Cool isn't it FROM USER"
-          }
+    } ~ pathPrefix("api") {
+      path("user1") {
+        //curl  localhost:8080/api/user1
+        complete("it is Cool isn't it FROM USER")
+      } ~ parameter("name".as[String]) { name =>
+        //curl http://localhost:8080/api?name=Brijesh
+        complete {
+          s"name is $name"
         }
       }
     }
